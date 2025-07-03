@@ -1,0 +1,33 @@
+<header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <!-- Logo -->
+            <div class="flex-shrink-0 flex items-center">
+                <a routerLink="/" class="text-xl font-bold text-indigo-600">
+                    Quản Lý Tài Khoản
+                </a>
+            </div>
+
+            <!-- Navigation - Desktop -->
+
+            <!-- CTA Buttons - Desktop -->
+            <div class="md:flex items-center justify-between">
+                <div *ngIf="userExisting">
+
+                    <span>Xin chào, {{ userExisting?.name }}</span>
+                </div>
+                <div class="flex items-center space-x-4" *ngIf="!userExisting">
+                    <a routerLink="/login"
+                        class="text-gray-500 hover:text-indigo-600 px-3 py-2 text-sm font-medium cursor-pointer">
+                        Login
+                    </a>
+                    <a routerLink="/register"
+                        class="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700">
+                        Sign Up
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</header>
