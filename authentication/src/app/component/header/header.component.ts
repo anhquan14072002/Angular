@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { User } from '../../enum/user.type';
+import { User } from '../../type/user.type';
 
 @Component({
   selector: 'app-header',

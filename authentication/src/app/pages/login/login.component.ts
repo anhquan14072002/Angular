@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
-import { User } from '../../enum/user.type';
+import { User } from '../../type/user.type';
 import { ToastService } from '../../services/toast.service';
 import { UserService } from '../../services/api/user.service';
 
