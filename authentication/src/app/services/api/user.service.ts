@@ -22,12 +22,30 @@ export class UserService {
     );
   }
 
-createUser(user: User): Observable<User[]> {
-  return this.httpClient.post<User[]>(`${this.apiUrl}/user`, user).pipe(
-    catchError((error: any) => {
-      console.error(error);
-      return throwError(() => error);
-    })
-  );
-}
+  createUser(user: User): Observable<User[]> {
+    return this.httpClient.post<User[]>(`${this.apiUrl}/user`, user).pipe(
+      catchError((error: any) => {
+        console.error(error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  updateUser(user: User, id: string): Observable<User[]> {
+    return this.httpClient.put<User[]>(`${this.apiUrl}/user/${id}`, user).pipe(
+      catchError((error: any) => {
+        console.error(error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  deleteUser(id: string): Observable<void> {
+    return this.httpClient.delete<void>(`${this.apiUrl}/user/${id}`).pipe(
+      catchError((error: any) => {
+        console.error(error);
+        return throwError(() => error);
+      })
+    );
+  }
 }
