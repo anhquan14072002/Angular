@@ -1,17 +1,48 @@
 <div class="card flex justify-center">
-    <p-dialog header="Edit Profile" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
-        <span class="p-text-secondary block mb-8">Update your information.</span>
-        <div class="flex items-center gap-4 mb-4">
-            <label for="username" class="font-semibold w-24">Username</label>
-            <input pInputText id="username" class="flex-auto" autocomplete="off" />
-        </div>
-        <div class="flex items-center gap-4 mb-8">
-            <label for="email" class="font-semibold w-24">Email</label>
-            <input pInputText id="email" class="flex-auto" autocomplete="off" />
-        </div>
-        <div class="flex justify-end gap-2">
-            <p-button label="Cancel" severity="secondary" (click)="closeDialog()" />
-            <p-button label="Save" (click)="saveDialog()" />
-        </div>
+    <p-dialog header="Chi tiết người dùng" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+        <form #userForm="ngForm">
+            <div class="flex items-center gap-4 mb-4">
+                <label for="name" class="font-semibold w-24">Tên</label>
+                <input pInputText id="name" class="flex-auto" autocomplete="off" [(ngModel)]="userDetail.name" name="name" required minlength="3" #name="ngModel" />
+                <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+                    <div *ngIf="name.errors?.['required']">Tên là bắt buộc</div>
+                    <div *ngIf="name.errors?.['minlength']">Tên phải có ít nhất 3 ký tự</div>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 mb-4">
+                <label for="email" class="font-semibold w-24">Email</label>
+                <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="userDetail.email" name="email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" #email="ngModel" />
+                <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+                    <div *ngIf="email.errors?.['required']">Email là bắt buộc</div>
+                    <div *ngIf="email.errors?.['pattern']">Email không hợp lệ</div>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 mb-4">
+                <label for="phoneNumber" class="font-semibold w-24">Số điện thoại</label>
+                <input pInputText id="phoneNumber" class="flex-auto" autocomplete="off" [(ngModel)]="userDetail.phoneNumber" name="phoneNumber" required pattern="[0-9]{10}" #phoneNumber="ngModel" />
+                <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)" class="alert alert-danger">
+                    <div *ngIf="phoneNumber.errors?.['required']">Số điện thoại là bắt buộc</div>
+                    <div *ngIf="phoneNumber.errors?.['pattern']">Số điện thoại không hợp lệ</div>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 mb-4">
+                <label for="address" class="font-semibold w-24">Địa chỉ</label>
+                <input pInputText id="address" class="flex-auto" autocomplete="off" [(ngModel)]="userDetail.address" name="address" required #address="ngModel" />
+                <div *ngIf="address.invalid && (address.dirty || address.touched)" class="alert alert-danger">
+                    <div *ngIf="address.errors?.['required']">Địa chỉ là bắt buộc</div>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 mb-4">
+                <label for="role" class="font-semibold w-24">Vai trò</label>
+                <input pInputText id="role" class="flex-auto" autocomplete="off" [(ngModel)]="userDetail.role" name="role" required #role="ngModel" />
+                <div *ngIf="role.invalid && (role.dirty || role.touched)" class="alert alert-danger">
+                    <div *ngIf="role.errors?.['required']">Vai trò là bắt buộc</div>
+                </div>
+            </div>
+            <div class="flex justify-end gap-2">
+                <p-button label="Hủy" severity="secondary" (click)="closeDialog()" />
+                <p-button label="Lưu" (click)="saveDialog(userForm,userDetail)" [disabled]="!userForm.valid" />
+            </div>
+        </form>
     </p-dialog>
 </div>

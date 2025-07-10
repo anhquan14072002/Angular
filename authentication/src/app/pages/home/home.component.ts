@@ -23,6 +23,8 @@ export class HomeComponent {
 
 
   users!: User[];
+  userDetail!: User;
+
   first = 0;
 
   rows = 10;
@@ -64,6 +66,9 @@ export class HomeComponent {
   }
   handleUserDetail(user: User) {
     this.visible = true;
+    this.userDetail =user
+    console.log(this.userDetail);
+    
   }
 
   handleDeleteUser(id: string, name: string): void {
