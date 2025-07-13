@@ -7,25 +7,38 @@
       </h2>
     </div>
 
-    <form class="mt-8 space-y-6" (ngSubmit)="onSubmit()">
+    <form class="mt-8 space-y-6" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="rounded-md shadow-sm space-y-4">
         <div>
           <label for="email" class="sr-only">Email</label>
-          <input id="email" name="email" type="email" autocomplete="email" required
+          <input id="email" type="email" formControlName="email"
             class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Email" [(ngModel)]="user.email">
+            placeholder="Email">
+          <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+            class="text-red-500 text-xs mt-1">
+            <div *ngIf="loginForm.get('email')?.errors?.['required']">Email là bắt buộc</div>
+             <div *ngIf="loginForm.get('email')?.errors?.['email']">
+    Email không đúng định dạng
+  </div>
+            <div *ngIf="loginForm.get('email')?.errors?.['minlength']">Email phải có ít nhất 8 ký tự</div>
+          </div>
         </div>
         <div>
           <label for="password" class="sr-only">Mật khẩu</label>
-          <input id="password" name="password" type="password" autocomplete="current-password" required
+          <input id="password" type="password" formControlName="password"
             class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Mật khẩu" [(ngModel)]="user.password">
+            placeholder="Mật khẩu">
+          <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+            class="text-red-500 text-xs mt-1">
+            <div *ngIf="loginForm.get('password')?.errors?.['required']">Mật khẩu là bắt buộc</div>
+            <div *ngIf="loginForm.get('password')?.errors?.['minlength']">Mật khẩu phải có ít nhất 8 ký tự</div>
+          </div>
         </div>
       </div>
 
       <div class="flex items-center justify-between">
         <div class="flex items-center">
-          <input id="remember-me" name="remember-me" type="checkbox"
+          <input id="remember-me" type="checkbox" formControlName="rememberMe"
             class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
           <label for="remember-me" class="ml-2 block text-sm text-gray-900">
             Ghi nhớ đăng nhập

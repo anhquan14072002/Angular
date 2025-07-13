@@ -1,37 +1,48 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { UserService } from './../../services/user.service';
+import { Component, OnInit } from '@angular/core';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
 import { User } from '../../type/user.type';
 import { ToastService } from '../../services/toast.service';
-import { UserService } from '../../services/api/user.service';
-
-
+import { UserApiService } from '../../services/api/userApi.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, ToastModule],
+  imports: [CommonModule, ReactiveFormsModule, ToastModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
-
-  user: Partial<User> = {
-    email: '',
-    password: ''
-  };
-
-  users: User[] = []
+export class LoginComponent implements OnInit {
+  loginForm: FormGroup;
+  users: User[] = [];
 
   constructor(
     private router: Router,
     private readonly toast: ToastService,
+    private readonly userApiService: UserApiService,
     private readonly userService: UserService,
-  ) { }
+    private fb: FormBuilder
+  ) {
+    this.loginForm = this.fb.group({
+      email: ['', [
+        Validators.required,          // Bắt buộc nhập
+        Validators.email,             // Đúng định dạng email
+        Validators.minLength(8),      // Tối thiểu 8 ký tự
+      ]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      rememberMe: [false]
+    });
+  }
 
   ngOnInit(): void {
-    this.userService.getAllUser().subscribe({
+    this.loadUsers();
+  }
+
+  loadUsers(): void {
+    this.userApiService.getAllUser().subscribe({
       next: (response) => {
         console.log('API response:', response);
         this.users = response;
@@ -42,25 +53,21 @@ export class LoginComponent {
       }
     });
   }
-  onSubmit() {
-    if (!this.user.email || !this.user.password ||
-      this.user.email.length < 8 || this.user.password.length < 8) {
-      console.log("Tài khoản hoặc mật khẩu phải lớn hơn 8 kí tự");
-      this.toast.showError('Tài khoản và mật khẩu phải có ít nhất 8 ký tự');
-      return;
-    }
-    const filteredUser = this.users.find(u => u.email === this.user.email && u.password === this.user.password);
 
-  
+  onSubmit(): void {
+    const formValue = this.loginForm.value;
+    const filteredUser = this.users.find(u =>
+      u.email === formValue.email &&
+      u.password === formValue.password
+    );
+
     if (filteredUser) {
       console.log('Đăng nhập thành công');
-      console.log(filteredUser);
-      localStorage.setItem('user', JSON.stringify(filteredUser));
+      this.userService.setUser(filteredUser);
       this.router.navigate(['/home']);
     } else {
-      console.log('Tài khoản hoặc mật khẩu không chính xác');
-      this.toast.showError('Tài khoản hoặc mật khẩu không chính xác');
+      (formValue.email.length > 0 && formValue.password.length > 0) ?
+        this.toast.showError("Tài khoản hoặc mật khẩu không đúng") : ''
     }
-    console.log('Login submitted:', this.user);
   }
 }

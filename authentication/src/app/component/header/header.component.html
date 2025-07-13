@@ -15,6 +15,7 @@
                 <div *ngIf="userExisting">
 
                     <span>Xin chào, {{ userExisting?.name }}</span>
+                    <p-button label="Đăng xuất" (click)="handleLogout()"/>
                 </div>
                 <div class="flex items-center space-x-4" *ngIf="!userExisting">
                     <a routerLink="/login"

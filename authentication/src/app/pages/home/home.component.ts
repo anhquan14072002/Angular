@@ -1,22 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { DialogViewComponent } from '../../component/dialog-view/dialog-view.component';
+import { UserApiService } from '../../services/api/userApi.service';
 import { ToastService } from '../../services/toast.service';
 import { User } from '../../type/user.type';
-import { UserService } from './../../services/api/user.service';
+import { RoleValue } from '../../utils/role';
 
 @Component({
   selector: 'app-home',
-  imports: [ToastModule, TableModule, ButtonModule, DialogViewComponent],
+  imports: [ToastModule, TableModule, ButtonModule, DialogViewComponent, SelectModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   constructor(
     private readonly toast: ToastService,
-    private readonly userService: UserService
+    private readonly userService: UserApiService
   ) { }
   //Visibility dialog 
   visible: boolean = false;
@@ -42,7 +45,7 @@ export class HomeComponent {
     });
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.fetchData()
   }
 
@@ -64,11 +67,16 @@ export class HomeComponent {
     this.visible = newValue;
 
   }
+
+  getRoleName(roleValue: string): string {
+    const role = RoleValue.find(r => r.value === roleValue);
+    return role ? role.name : roleValue;
+  }
   handleUserDetail(user: User) {
     this.visible = true;
-    this.userDetail =user
+    this.userDetail = user
     console.log(this.userDetail);
-    
+
   }
 
   handleDeleteUser(id: string, name: string): void {
