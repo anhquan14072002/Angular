@@ -3,9 +3,16 @@
         <div class="flex justify-between items-center h-16">
             <!-- Logo -->
             <div class="flex-shrink-0 flex items-center">
-                <a routerLink="/" class="text-xl font-bold text-indigo-600">
-                    Quản Lý Tài Khoản
-                </a>
+                <div *ngIf="userExisting">
+                    <a routerLink="/" class="text-xl font-bold text-indigo-600">
+                        Quản Lý Tài Khoản
+                    </a>
+                </div>
+                <div *ngIf="!userExisting">
+                    <a routerLink="/login" class="text-xl font-bold text-indigo-600">
+                        Quản Lý Tài Khoản
+                    </a>
+                </div>
             </div>
 
             <!-- Navigation - Desktop -->
@@ -15,7 +22,7 @@
                 <div *ngIf="userExisting">
 
                     <span>Xin chào, {{ userExisting?.name }}</span>
-                    <p-button label="Đăng xuất" (click)="handleLogout()"/>
+                    <p-button label="Đăng xuất" (click)="handleLogout()" />
                 </div>
                 <div class="flex items-center space-x-4" *ngIf="!userExisting">
                     <a routerLink="/login"

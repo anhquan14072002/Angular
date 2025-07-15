@@ -13,7 +13,7 @@ import { SelectModule } from 'primeng/select';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-dialog-view',
+  selector: 'app-dialog-create',
   imports: [
     Dialog,
     ButtonModule,
@@ -23,33 +23,14 @@ import { CommonModule } from '@angular/common';
     SelectModule,
     CommonModule
   ],
-  templateUrl: './dialog-view.component.html',
-  styleUrls: ['./dialog-view.component.css']
+  templateUrl: './dialog-create.component.html',
+  styleUrls: ['./dialog-create.component.css']
 })
-export class DialogViewComponent implements OnInit {
+export class DialogCreateComponent implements OnInit {
   @Input() visible: boolean = false;
-  private _userDetail!: User; // Backing field
-  
-  @Input() 
-  set userDetail(user: User) {
-    if (user) {
-      this._userDetail = user;
-      this.userForm.patchValue({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        phoneNumber: user.phoneNumber,
-        address: user.address
-      });
-    }
-  }
-  
-  get userDetail(): User {
-    return this._userDetail;
-  }
-
   @Output() visibleChange = new EventEmitter<boolean>();
+  @Output() userCreated = new EventEmitter<User>(); // Event khi tạo thành công
+
   roles: Role[] | undefined;
   userForm: FormGroup;
 
@@ -59,7 +40,6 @@ export class DialogViewComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.userForm = this.fb.group({
-      id: [''],
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}')]],
       role: ['', Validators.required],
@@ -74,36 +54,26 @@ export class DialogViewComponent implements OnInit {
 
   onVisibleChange(newValue: boolean) {
     this.visibleChange.emit(newValue);
+    if (!newValue) {
+      this.userForm.reset(); // Reset form khi đóng dialog
+    }
   }
 
   closeDialog() {
     this.onVisibleChange(false);
   }
 
-  saveDialog() {
-    if (this.userForm.invalid || !this.userDetail) {
-      return;
-    }
-
-    const formValue = this.userForm.value;
-    const userToUpdate = {
-      ...formValue,
-      id: this.userForm.value.id || this.userDetail.id,
-      password: this.userDetail.password // Sử dụng password từ userDetail hiện tại
-    };
-
-    if (!userToUpdate.id) {
-      this.toast.showError('Không tìm thấy ID người dùng');
-      return;
-    }
-
-    this.userService.updateUser(userToUpdate, userToUpdate.id).subscribe({
-      next: () => {
-        this.toast.showSuccess('Cập nhật thành công');
+  createUser() {
+    if (this.userForm.invalid) return;
+    const newUser = this.userForm.value;
+    this.userService.createUser(newUser).subscribe({
+      next: (createdUser: any) => {
+        this.toast.showSuccess('Tạo người dùng thành công');
+        this.userCreated.emit(createdUser);
         this.onVisibleChange(false);
       },
       error: () => {
-        this.toast.showError('Cập nhật không thành công');
+        this.toast.showError('Tạo người dùng không thành công');
       }
     });
   }

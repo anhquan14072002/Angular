@@ -1,5 +1,5 @@
 <div class="card flex justify-center">
-    <p-dialog header="Chi tiết người dùng" [modal]="true" [(visible)]="visible" 
+    <p-dialog header="Tạo người dùng mới" [modal]="true" [(visible)]="visible" 
               [style]="{ width: '50rem' }" [breakpoints]="{ '960px': '75vw', '640px': '90vw' }"
               styleClass="custom-dialog">
         <form [formGroup]="userForm" class="space-y-6 p-4">
@@ -76,8 +76,8 @@
             <div class="flex justify-end gap-4 pt-6 mt-6 border-t border-gray-200">
                 <p-button label="Hủy" severity="secondary" (click)="closeDialog()" 
                           styleClass="px-6 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors duration-200"/>
-                <p-button label="Lưu" (click)="saveDialog()" [disabled]="userForm.invalid"
-                          styleClass="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200"/>
+                <p-button label="Tạo mới" (click)="createUser()" [disabled]="userForm.invalid"
+                          styleClass="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors duration-200"/>
             </div>
         </form>
     </p-dialog>

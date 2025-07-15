@@ -1,2 +1,89 @@
-<h1>regiter</h1>
-<app-dialog-view/>
+<div class="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
+  <h2 class="text-2xl font-bold text-center mb-6">Đăng ký tài khoản</h2>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <!-- Name Field -->
+    <div class="form-group">
+      <label for="name" class="block text-sm font-medium text-gray-700">Họ và tên</label>
+      <input pInputText id="name" formControlName="name" [ngClass]="{'p-invalid': registerForm.get('name')?.invalid && 
+             (registerForm.get('name')?.touched || registerForm.get('name')?.dirty)}" class="w-full mt-1">
+      <small *ngIf="registerForm.get('name')?.invalid && 
+             (registerForm.get('name')?.touched || registerForm.get('name')?.dirty)" class="p-error block">
+        <span class="text-sm text-red-600" *ngIf="registerForm.get('name')?.errors?.['required']">Tên là bắt buộc</span>
+        <span class="text-sm text-red-600" *ngIf="registerForm.get('name')?.errors?.['minlength']">Tối thiểu 3 ký
+          tự</span>
+      </small>
+    </div>
+
+    <!-- Email Field -->
+    <div class="form-group">
+      <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+      <input pInputText id="email" type="email" formControlName="email" [ngClass]="{'p-invalid': registerForm.get('email')?.invalid && 
+             (registerForm.get('email')?.touched || registerForm.get('email')?.dirty)}" class="w-full mt-1">
+      <small *ngIf="registerForm.get('email')?.invalid && 
+             (registerForm.get('email')?.touched || registerForm.get('email')?.dirty)" class="p-error block">
+        <span class="text-sm text-red-600" *ngIf="registerForm.get('email')?.errors?.['required']">Email là bắt
+          buộc</span>
+        <span class="text-sm text-red-600" *ngIf="registerForm.get('email')?.errors?.['email']">Email không hợp
+          lệ</span>
+      </small>
+    </div>
+
+    <!-- Phone Number Field -->
+    <div class="form-group">
+      <label for="phoneNumber" class="block text-sm font-medium text-gray-700">Số điện thoại</label>
+      <input pInputText id="phoneNumber" formControlName="phoneNumber" [ngClass]="{'p-invalid': registerForm.get('phoneNumber')?.invalid && 
+             (registerForm.get('phoneNumber')?.touched || registerForm.get('phoneNumber')?.dirty)}"
+        class="w-full mt-1">
+      <small *ngIf="registerForm.get('phoneNumber')?.invalid && 
+             (registerForm.get('phoneNumber')?.touched || registerForm.get('phoneNumber')?.dirty)"
+        class="p-error block">
+        <span class="text-sm text-red-600" *ngIf="registerForm.get('phoneNumber')?.errors?.['required']">Số điện thoại
+          là bắt buộc</span>
+        <span class="text-sm text-red-600" *ngIf="registerForm.get('phoneNumber')?.errors?.['pattern']">Số điện thoại
+          không hợp lệ</span>
+      </small>
+    </div>
+
+    <!-- Address Field -->
+    <div class="form-group">
+      <label for="address" class="block text-sm font-medium text-gray-700">Địa chỉ</label>
+      <input pInputText id="address" formControlName="address" [ngClass]="{'p-invalid': registerForm.get('address')?.invalid && 
+             (registerForm.get('address')?.touched || registerForm.get('address')?.dirty)}" class="w-full mt-1">
+      <small *ngIf="registerForm.get('address')?.invalid && 
+             (registerForm.get('address')?.touched || registerForm.get('address')?.dirty)" class="p-error block">
+        <span class="text-sm text-red-600" *ngIf="registerForm.get('address')?.errors?.['required']">Địa chỉ là bắt
+          buộc</span>
+      </small>
+    </div>
+
+    <!-- Password Field -->
+    <div class="form-group">
+      <label for="password" class="block text-sm font-medium text-gray-700">Mật khẩu</label>
+      <div class="relative">
+        <input pInputText id="password" [type]="passwordVisible ? 'text' : 'password'" formControlName="password"
+          [ngClass]="{'p-invalid': registerForm.get('password')?.invalid && 
+           (registerForm.get('password')?.touched || registerForm.get('password')?.dirty)}" class="w-full pr-10">
+        <!-- Thêm padding-right để tránh chữ bị đè lên icon -->
+
+        <button type="button" (click)="togglePasswordVisibility()"
+          class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none">
+          <i [class]="passwordVisible ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+        </button>
+      </div>
+
+      <small *ngIf="registerForm.get('password')?.invalid && 
+         (registerForm.get('password')?.touched || registerForm.get('password')?.dirty)" class="p-error block">
+        <span class="text-sm text-red-600" *ngIf="registerForm.get('password')?.errors?.['required']">Mật khẩu là bắt
+          buộc</span>
+        <span class="text-sm text-red-600" *ngIf="registerForm.get('password')?.errors?.['minlength']">Tối thiểu 6 ký
+          tự</span>
+      </small>
+    </div>
+    <!-- Submit Button -->
+    <div class="text-center pt-4">
+      <button pButton type="submit" label="Đăng ký" [disabled]="registerForm.invalid"
+        class="w-full bg-blue-600 hover:bg-blue-700"></button>
+    </div>
+  </form>
+</div>

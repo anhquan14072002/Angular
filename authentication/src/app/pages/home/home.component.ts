@@ -9,10 +9,11 @@ import { UserApiService } from '../../services/api/userApi.service';
 import { ToastService } from '../../services/toast.service';
 import { User } from '../../type/user.type';
 import { RoleValue } from '../../utils/role';
+import { DialogCreateComponent } from '../../component/dialog-create/dialog-create.component';
 
 @Component({
   selector: 'app-home',
-  imports: [ToastModule, TableModule, ButtonModule, DialogViewComponent, SelectModule, FormsModule],
+  imports: [ToastModule, TableModule, ButtonModule, DialogViewComponent, SelectModule, FormsModule, DialogCreateComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -20,10 +21,10 @@ export class HomeComponent implements OnInit {
   constructor(
     private readonly toast: ToastService,
     private readonly userService: UserApiService
-  ) { }
+  ) { };
   //Visibility dialog 
   visible: boolean = false;
-
+  showCreateDialog: boolean = false
 
   users!: User[];
   userDetail!: User;
@@ -63,9 +64,16 @@ export class HomeComponent implements OnInit {
   }
 
   onVisibleChange(newValue: boolean) {
-    console.log('newValue', newValue);
+    this.fetchData()
     this.visible = newValue;
 
+  }
+  openCreateDialog() {
+    this.showCreateDialog = true;
+  }
+
+  onUserCreated() {
+    this.fetchData()
   }
 
   getRoleName(roleValue: string): string {
