@@ -13,6 +13,7 @@ import { UserService } from '../../services/user.service';
 })
 export class HeaderComponent implements OnInit {
   userExisting: Partial<User> | null = null;
+  adminExisting: Partial<User> | null = null;
   previousUser: string | null = null;
 
   constructor(

@@ -22,7 +22,7 @@ export class UserApiService {
     );
   }
 
-  createUser(user: User): Observable<User[]> {
+  createUser(user: User | User[]): Observable<User[]> {
     return this.httpClient.post<User[]>(`${this.apiUrl}/user`, user).pipe(
       catchError((error: any) => {
         console.error(error);
@@ -31,7 +31,7 @@ export class UserApiService {
     );
   }
 
-  updateUser(user: User, id: string | number): Observable<User> {
+  updateUser(user: User | User[], id: string | number): Observable<User> {
     return this.httpClient.put<User>(`${this.apiUrl}/user/${id}`, user).pipe(
       catchError((error: any) => {
         console.error(error);

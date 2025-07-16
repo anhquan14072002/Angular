@@ -5,5 +5,6 @@ export type User = {
     phoneNumber: string,
     address: string,
     password: string,
-    role: string
+    role: string,
+    isActive:boolean
 }

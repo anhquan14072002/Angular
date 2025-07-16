@@ -1,3 +1,4 @@
+import { UserService } from './../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
@@ -10,6 +11,8 @@ import { ToastService } from '../../services/toast.service';
 import { User } from '../../type/user.type';
 import { RoleValue } from '../../utils/role';
 import { DialogCreateComponent } from '../../component/dialog-create/dialog-create.component';
+import { StatusValue } from '../../utils/status';
+import { Status } from '../../type/status.type';
 
 @Component({
   selector: 'app-home',
@@ -20,21 +23,24 @@ import { DialogCreateComponent } from '../../component/dialog-create/dialog-crea
 export class HomeComponent implements OnInit {
   constructor(
     private readonly toast: ToastService,
-    private readonly userService: UserApiService
+    private readonly userApiService: UserApiService,
+    private readonly userService:UserService
   ) { };
+  users: User[] = [];
+  userDetail!: User;
+  userExisting!:User;
+  status: Status[] | undefined;
+
   //Visibility dialog 
   visible: boolean = false;
   showCreateDialog: boolean = false
-
-  users: User[] = [];
-  userDetail!: User;
 
   first = 0;
 
   rows = 10;
 
   fetchData = () => {
-    this.userService.getAllUser().subscribe({
+    this.userApiService.getAllUser().subscribe({
       next: (response) => {
         console.log('API response:', response);
         this.users = response;
@@ -47,9 +53,27 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fetchData()
+     this.userService.getUser().subscribe(user => {
+      this.userExisting = user;
+    });
+    this.status = StatusValue,
+      this.fetchData()
   }
 
+  onStatusChange(event: any, user: User) {
+    const updateUser = { ...user, isActive: event.value }
+    this.userApiService.updateUser(updateUser, user.id).subscribe({
+      next: () => {
+        this.toast.showSuccess('Cập nhật thành công');
+      },
+      error: () => {
+        this.toast.showError('Cập nhật không thành công');
+      }
+    });
+    console.log(event.value);
+    console.log(user);
+
+  }
   pageChange(event: any) {
     this.first = event.first;
     this.rows = event.rows;
@@ -88,7 +112,7 @@ export class HomeComponent implements OnInit {
   }
 
   handleDeleteUser(id: string, name: string): void {
-    this.userService.deleteUser(id).subscribe({
+    this.userApiService.deleteUser(id).subscribe({
       next: () => {
         this.toast.showSuccess(`Xóa thành công người dùng: ${name}`);
         this.fetchData()

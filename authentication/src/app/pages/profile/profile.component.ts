@@ -87,7 +87,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
             address: user.address
           });
 
-          // Gọi API để lấy dữ liệu mới nhất từ server
           return this.userApiService.getUserById(user.id).pipe(
             catchError(err => {
               this.toast.showError('Không thể cập nhật thông tin từ server');

@@ -28,11 +28,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [
-        Validators.required,          // Bắt buộc nhập
-        Validators.email,             // Đúng định dạng email
-        Validators.minLength(8),      // Tối thiểu 8 ký tự
-      ]],
+      email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}')]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       rememberMe: [false]
     });
@@ -59,7 +55,8 @@ export class LoginComponent implements OnInit {
     const formValue = this.loginForm.value;
     const filteredUser = this.users.find(u =>
       u.email === formValue.email &&
-      u.password === formValue.password
+      u.password === formValue.password &&
+      u.isActive === true
     );
 
     if (filteredUser) {

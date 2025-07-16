@@ -36,7 +36,7 @@ export class RegisterComponent {
   ) {
     this.registerForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}')]],
       phoneNumber: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],
       address: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -49,7 +49,7 @@ export class RegisterComponent {
       return;
     }
 
-    const userData = { ...this.registerForm.value, role: ROLE_MANAGER.User };
+    const userData = { ...this.registerForm.value, role: ROLE_MANAGER.User, isActive: true };
     this.userService.createUser(userData).subscribe({
       next: () => {
         this.toast.showSuccess('Đăng ký thành công');

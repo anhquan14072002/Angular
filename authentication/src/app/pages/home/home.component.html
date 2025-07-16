@@ -1,10 +1,9 @@
 <p-toast />
 <div>
-    <h1 class="text-center text-4xl font-bold m-5 mb-10">Danh sách quản lý người dùng</h1>
+    <h1 class="text-center text-3xl font-bold m-5 mb-5">Danh sách người dùng</h1>
 </div>
-<div class="flex justify-start items-center mb-2 ml-20">
-    <p-button icon="pi pi-plus" iconPos="right" label="Tạo mới" severity="help"
-        (click)="openCreateDialog()"></p-button>
+<div class="flex justify-start items-center mb-5 ml-20">
+    <p-button icon="pi pi-plus" iconPos="right" label="Tạo mới" severity="help" (click)="openCreateDialog()"></p-button>
 </div>
 <div class="card ml-20 mr-20 border border-gray-100 shadow">
     <p-table [value]="users" [paginator]="true" [rows]="5" [first]="first" [showCurrentPageReport]="true"
@@ -13,11 +12,11 @@
         (onPage)="pageChange($event)" [rows]="10" [rowsPerPageOptions]="[10, 25, 50]">
         <ng-template #header>
             <tr>
-                <th pSortableColumn="name" style="width:15%">Tên <p-sortIcon field="name" /></th>
+                <th pSortableColumn="name" style="width:20%">Tên <p-sortIcon field="name" /></th>
                 <th pSortableColumn="email" style="width:18%">Email <p-sortIcon field="email" /></th>
                 <th pSortableColumn="phoneNumber" style="width:15%">Số điện thoại <p-sortIcon field="phoneNumber" />
                 </th>
-                <th pSortableColumn="address" style="width:18%">Địa chỉ <p-sortIcon field="address" /></th>
+                <th pSortableColumn="address" style="width:10%">Trạng Thái <p-sortIcon field="address" /></th>
                 <th pSortableColumn="role" style="width:15%">Vai trò <p-sortIcon field="role" /></th>
                 <th style="width:20%">Hành Động</th>
             </tr>
@@ -27,15 +26,21 @@
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.phoneNumber }}</td>
-                <td>{{ user.address }}</td>
+                <td>
+                    <p-select [disabled]="userExisting.id === user.id" [options]="status" [(ngModel)]="user.isActive"
+                        (onChange)="onStatusChange($event, user)" optionValue="value" optionLabel="name"
+                        class="w-full md:w-40" />
+                </td>
                 <td>{{ getRoleName(user.role) }}</td>
                 <td>
-                    <p-button class="mr-2" severity="info" label="Chi tiết" (click)="handleUserDetail(user)" />
-                    <p-button label="Xóa" severity="danger" (click)="handleDeleteUser(user.id, user.name)" />
+                    <p-button [disabled]="userExisting.id === user.id" class="mr-2" severity="info" label="Chi tiết"
+                        (click)="handleUserDetail(user)" />
+                    <p-button [disabled]="userExisting.id === user.id" label="Xóa" severity="danger"
+                        (click)="handleDeleteUser(user.id, user.name)" />
                 </td>
             </tr>
         </ng-template>
-        
+
     </p-table>
 </div>
 <!-- Dialog -->

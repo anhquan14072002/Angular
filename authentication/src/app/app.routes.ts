@@ -4,6 +4,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AuthGuard } from './guard.ts/auth.guard';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { ErrorComponent } from './pages/error/error.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -16,7 +17,7 @@ export const routes: Routes = [
     { path: 'profile', component: ProfileComponent },
     {
         path: '',
-        component: HomeComponent,
-        canActivate: [AuthGuard]
-    }
+        component: LoginComponent,
+    },
+    { path: '**', component: ErrorComponent },
 ];

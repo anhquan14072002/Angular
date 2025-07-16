@@ -4,23 +4,28 @@
             <!-- Logo -->
             <div class="flex-shrink-0 flex items-center">
                 <div *ngIf="userExisting">
-                    <a routerLink="/profile" class="text-xl font-bold text-indigo-600">
-                        Quản Lý Tài Khoản
+                    <a routerLink="/profile" class="text-3xl font-bold text-indigo-600">
+                        HOME
                     </a>
                 </div>
                 <div *ngIf="!userExisting">
-                    <a routerLink="/login" class="text-xl font-bold text-indigo-600">
-                        Quản Lý Tài Khoản
+                    <a routerLink="/login" class="text-3xl font-bold text-indigo-600">
+                        HOME
+                    </a>
+                </div>
+            </div>
+            <div class="flex-shrink-0 flex items-center">
+                <div *ngIf="userExisting?.role === 'Admin'">
+                    <a routerLink="/home" class="text-xl font-bold text-green-400">
+                        Quản lý
                     </a>
                 </div>
             </div>
 
-
-            <!-- CTA Buttons - Desktop -->
             <div class="md:flex items-center justify-between">
                 <div *ngIf="userExisting">
                     <span>Xin chào, {{ userExisting?.name }}</span>
-                    <p-button class="ml-3" label="Đăng xuất" (click)="handleLogout()" />
+                    <p-button size="small" class="ml-3" label="Đăng xuất" (click)="handleLogout()" />
                 </div>
                 <div class="flex items-center space-x-4" *ngIf="!userExisting">
                     <a routerLink="/login"
