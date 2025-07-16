@@ -1,0 +1,117 @@
+{
+  "user": [
+    {
+      "id": 1,
+      "name": "quan",
+      "email": "quanbui030@gmail.com",
+      "role": "Admin",
+      "phoneNumber": "0987654321",
+      "address": "456 Nguyễn Trãi, TP.HCM",
+      "password": "123123123",
+      "isActive": true
+    },
+    {
+      "id": 2,
+      "name": "Trần Thị",
+      "email": "tranthibinh@example.com",
+      "role": "Admin",
+      "phoneNumber": "0987654321",
+      "address": "456 Nguyễn Trãi, TP.HCM",
+      "password": "Binh#7890",
+      "isActive": true
+    },
+    {
+      "id": 3,
+      "name": "Lê Hoàng Cường123123123",
+      "email": "lehoangcuong@example.com",
+      "role": "Admin",
+      "phoneNumber": "0978123456",
+      "address": "789 Hải Phòng, Đà Nẵng",
+      "isActive": true
+    },
+    {
+      "id": 6,
+      "name": "Đặng Thu Hà",
+      "email": "dangthuha@example.com",
+      "role": "Admin",
+      "phoneNumber": "0945678123",
+      "address": "753 Phạm Văn Đồng, Nha Trang",
+      "isActive": true
+    },
+    {
+      "id": 7,
+      "name": "Hoàng Văn Giang",
+      "email": "hoangvangiang@example.com",
+      "role": "User",
+      "phoneNumber": "0911223344",
+      "address": "456 Lý Thường Kiệt, Huế",
+      "isActive": true
+    },
+    {
+      "name": "qweqw",
+      "email": "qweqwe@gmail.com",
+      "role": "User",
+      "phoneNumber": "0987654321",
+      "address": "123123",
+      "id": 8,
+      "isActive": false
+    },
+    {
+      "name": "quan",
+      "email": "Quanbui@gmail.com",
+      "role": "User",
+      "phoneNumber": "0987654321",
+      "address": "423423",
+      "id": 9,
+      "isActive": true
+    },
+    {
+      "name": "Trần Thị Bìn",
+      "email": "quan@gmail.com",
+      "role": "Admin",
+      "phoneNumber": "0987654321",
+      "address": "Trần Thị Bìn",
+      "id": 10,
+      "isActive": true
+    },
+    {
+      "name": "Bui",
+      "email": "quanbui030@gmail.com",
+      "phoneNumber": "0999999999",
+      "address": "dangbeo",
+      "password": "12312312312312",
+      "role": "Người dùng",
+      "id": 12,
+      "isActive": true
+    },
+    {
+      "name": "123123",
+      "email": "quan@gmail.com",
+      "role": "Admin",
+      "phoneNumber": "0987654321",
+      "address": "12312312312",
+      "id": 13,
+      "isActive": false
+    },
+    {
+      "name": "Bùi Anh Quân",
+      "email": "quanbahe161819@fpt.edu.vn",
+      "phoneNumber": "0999999999",
+      "address": "Tay nguyen",
+      "password": "123123123",
+      "role": "User",
+      "id": 14,
+      "isActive": true
+    },
+    {
+      "id": 15,
+      "name": "Bùi Anh Quân",
+      "email": "quan123@gmail.com",
+      "role": "User",
+      "phoneNumber": "0987654321",
+      "address": "Ha Noi",
+      "password": "123123123",
+      "isActive": true
+    }
+  ]
+}
