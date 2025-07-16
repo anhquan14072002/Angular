@@ -28,7 +28,7 @@ import { CommonModule } from '@angular/common';
 })
 export class DialogViewComponent implements OnInit {
   @Input() visible: boolean = false;
-  private _userDetail!: User; // Backing field
+  private _userDetail!: User; 
   
   @Input() 
   set userDetail(user: User) {
@@ -54,7 +54,7 @@ export class DialogViewComponent implements OnInit {
   userForm: FormGroup;
 
   constructor(
-    private readonly userService: UserApiService,
+    private readonly userApiService: UserApiService,
     private readonly toast: ToastService,
     private fb: FormBuilder
   ) {
@@ -97,7 +97,7 @@ export class DialogViewComponent implements OnInit {
       return;
     }
 
-    this.userService.updateUser(userToUpdate, userToUpdate.id).subscribe({
+    this.userApiService.updateUser(userToUpdate, userToUpdate.id).subscribe({
       next: () => {
         this.toast.showSuccess('Cập nhật thành công');
         this.onVisibleChange(false);

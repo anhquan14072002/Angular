@@ -7,6 +7,7 @@ import { User } from '../../type/user.type';
 import { ToastService } from '../../services/toast.service';
 import { UserApiService } from '../../services/api/userApi.service';
 import { CommonModule } from '@angular/common';
+import { ROLE_MANAGER } from '../../enum/role';
 
 @Component({
   selector: 'app-login',
@@ -64,7 +65,7 @@ export class LoginComponent implements OnInit {
     if (filteredUser) {
       console.log('Đăng nhập thành công');
       this.userService.setUser(filteredUser);
-      this.router.navigate(['/home']);
+      filteredUser.role === ROLE_MANAGER.Admin ? this.router.navigate(['/home']) : this.router.navigate(['/profile']);
     } else {
       (formValue.email.length > 0 && formValue.password.length > 0) ?
         this.toast.showError("Tài khoản hoặc mật khẩu không đúng") : ''

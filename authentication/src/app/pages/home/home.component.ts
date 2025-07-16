@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
   visible: boolean = false;
   showCreateDialog: boolean = false
 
-  users!: User[];
+  users: User[] = [];
   userDetail!: User;
 
   first = 0;

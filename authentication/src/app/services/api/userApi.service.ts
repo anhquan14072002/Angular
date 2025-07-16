@@ -31,8 +31,8 @@ export class UserApiService {
     );
   }
 
-  updateUser(user: User, id: string|number): Observable<User[]> {
-    return this.httpClient.put<User[]>(`${this.apiUrl}/user/${id}`, user).pipe(
+  updateUser(user: User, id: string | number): Observable<User> {
+    return this.httpClient.put<User>(`${this.apiUrl}/user/${id}`, user).pipe(
       catchError((error: any) => {
         console.error(error);
         return throwError(() => error);
@@ -40,6 +40,14 @@ export class UserApiService {
     );
   }
 
+  getUserById(id: string | number): Observable<User> {
+    return this.httpClient.get<User>(`${this.apiUrl}/user/${id}`).pipe(
+      catchError((error: any) => {
+        console.error(error);
+        return throwError(() => error);
+      })
+    );
+  }
   deleteUser(id: string): Observable<void> {
     return this.httpClient.delete<void>(`${this.apiUrl}/user/${id}`).pipe(
       catchError((error: any) => {

@@ -1,0 +1,145 @@
+<div class="profile-container p-6 max-w-4xl mx-auto bg-gray-50 rounded-xl">
+  <!-- Header Section -->
+  <div class="profile-header flex justify-between items-center mb-8 pb-6 border-b border-gray-200">
+    <h1 class="text-3xl font-bold text-gray-800 tracking-tight">Thông tin cá nhân</h1>
+    <div *ngIf="!isEditing">
+      <p-button label="Chỉnh sửa" icon="pi pi-pencil" (click)="toggleEdit()" severity="info"
+        class="text-white  rounded-lg shadow-sm transition-all duration-200 hover:shadow-md"></p-button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="flex justify-center items-center h-64">
+    <i class="pi pi-spinner pi-spin text-4xl text-blue-500"></i>
+  </div>
+
+  <!-- Profile Form -->
+  <form *ngIf="!isLoading" [formGroup]="profileForm"
+    class="space-y-6 bg-white rounded-xl shadow-sm p-8 border border-gray-100">
+    <!-- View Mode -->
+    <div *ngIf="!isEditing" class="space-y-4">
+      <div
+        class="flex items-center py-4 border-b border-gray-100 hover:bg-gray-50 px-3 rounded-lg transition-colors duration-150">
+        <label class="w-48 font-medium text-gray-600">Tên</label>
+        <div class="flex-1 text-gray-800 font-medium">{{userDetail?.name}}</div>
+      </div>
+
+      <div
+        class="flex items-center py-4 border-b border-gray-100 hover:bg-gray-50 px-3 rounded-lg transition-colors duration-150">
+        <label class="w-48 font-medium text-gray-600">Email</label>
+        <div class="flex-1 text-gray-800 font-medium">{{userDetail?.email}}</div>
+      </div>
+
+      <div
+        class="flex items-center py-4 border-b border-gray-100 hover:bg-gray-50 px-3 rounded-lg transition-colors duration-150">
+        <label class="w-48 font-medium text-gray-600">Vai trò</label>
+        <div class="flex-1 text-gray-800 font-medium">
+          {{ getRoleName(userDetail?.role) }}
+        </div>
+      </div>
+
+      <div
+        class="flex items-center py-4 border-b border-gray-100 hover:bg-gray-50 px-3 rounded-lg transition-colors duration-150">
+        <label class="w-48 font-medium text-gray-600">Số điện thoại</label>
+        <div class="flex-1 text-gray-800 font-medium">{{userDetail?.phoneNumber}}</div>
+      </div>
+
+      <div class="flex items-center py-4 hover:bg-gray-50 px-3 rounded-lg transition-colors duration-150">
+        <label class="w-48 font-medium text-gray-600">Địa chỉ</label>
+        <div class="flex-1 text-gray-800 font-medium">{{userDetail?.address}}</div>
+      </div>
+    </div>
+
+    <!-- Edit Mode -->
+    <div *ngIf="isEditing" class="space-y-6">
+      <!-- Name Field -->
+      <div class="flex flex-col gap-1">
+        <div class="flex items-center gap-6">
+          <label for="name" class="font-semibold w-48 text-gray-700">Tên</label>
+          <input pInputText id="name"
+            class="flex-1 min-w-0 p-inputtext-sm border-gray-300 hover:border-blue-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-200 transition-colors duration-200"
+            autocomplete="off" formControlName="name"
+            [ngClass]="{'border-red-500': profileForm.get('name')?.invalid && (profileForm.get('name')?.dirty || profileForm.get('name')?.touched)}" />
+        </div>
+        <div
+          *ngIf="profileForm.get('name')?.invalid && (profileForm.get('name')?.dirty || profileForm.get('name')?.touched)"
+          class="ml-52 text-sm text-red-600 mt-1">
+          <div *ngIf="profileForm.get('name')?.errors?.['required']">Tên là bắt buộc</div>
+          <div *ngIf="profileForm.get('name')?.errors?.['minlength']">Tên phải có ít nhất 3 ký tự</div>
+        </div>
+      </div>
+
+      <!-- Email Field -->
+      <div class="flex flex-col gap-1">
+        <div class="flex items-center gap-6">
+          <label for="email" class="font-semibold w-48 text-gray-700">Email</label>
+          <input pInputText id="email"
+            class="flex-1 min-w-0 p-inputtext-sm border-gray-300 hover:border-blue-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-200 transition-colors duration-200"
+            autocomplete="off" formControlName="email"
+            [ngClass]="{'border-red-500': profileForm.get('email')?.invalid && (profileForm.get('email')?.dirty || profileForm.get('email')?.touched)}" />
+        </div>
+        <div
+          *ngIf="profileForm.get('email')?.invalid && (profileForm.get('email')?.dirty || profileForm.get('email')?.touched)"
+          class="ml-52 text-sm text-red-600 mt-1">
+          <div *ngIf="profileForm.get('email')?.errors?.['required']">Email là bắt buộc</div>
+          <div *ngIf="profileForm.get('email')?.errors?.['pattern']">Email không hợp lệ</div>
+        </div>
+      </div>
+
+      <!-- Role Field -->
+      <div class="flex flex-col gap-1">
+        <div class="flex items-center gap-6">
+          <label for="role" class="font-semibold w-48 text-gray-700">Vai trò</label>
+          <p-dropdown [options]="roles" formControlName="role" optionLabel="name" optionValue="value"
+            placeholder="Chọn Vai Trò" class="flex-1 min-w-0"
+            [ngClass]="{'border-red-500': profileForm.get('role')?.invalid && (profileForm.get('role')?.dirty || profileForm.get('role')?.touched)}"></p-dropdown>
+        </div>
+        <div
+          *ngIf="profileForm.get('role')?.invalid && (profileForm.get('role')?.dirty || profileForm.get('role')?.touched)"
+          class="ml-52 text-sm text-red-600 mt-1">
+          <div *ngIf="profileForm.get('role')?.errors?.['required']">Vai trò là bắt buộc</div>
+        </div>
+      </div>
+
+      <!-- Phone Number Field -->
+      <div class="flex flex-col gap-1">
+        <div class="flex items-center gap-6">
+          <label for="phoneNumber" class="font-semibold w-48 text-gray-700">Số điện thoại</label>
+          <input pInputText id="phoneNumber"
+            class="flex-1 min-w-0 p-inputtext-sm border-gray-300 hover:border-blue-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-200 transition-colors duration-200"
+            autocomplete="off" formControlName="phoneNumber"
+            [ngClass]="{'border-red-500': profileForm.get('phoneNumber')?.invalid && (profileForm.get('phoneNumber')?.dirty || profileForm.get('phoneNumber')?.touched)}" />
+        </div>
+        <div
+          *ngIf="profileForm.get('phoneNumber')?.invalid && (profileForm.get('phoneNumber')?.dirty || profileForm.get('phoneNumber')?.touched)"
+          class="ml-52 text-sm text-red-600 mt-1">
+          <div *ngIf="profileForm.get('phoneNumber')?.errors?.['required']">Số điện thoại là bắt buộc</div>
+          <div *ngIf="profileForm.get('phoneNumber')?.errors?.['pattern']">Số điện thoại không hợp lệ</div>
+        </div>
+      </div>
+
+      <!-- Address Field -->
+      <div class="flex flex-col gap-1">
+        <div class="flex items-center gap-6">
+          <label for="address" class="font-semibold w-48 text-gray-700">Địa chỉ</label>
+          <input pInputText id="address"
+            class="flex-1 min-w-0 p-inputtext-sm border-gray-300 hover:border-blue-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-200 transition-colors duration-200"
+            autocomplete="off" formControlName="address"
+            [ngClass]="{'border-red-500': profileForm.get('address')?.invalid && (profileForm.get('address')?.dirty || profileForm.get('address')?.touched)}" />
+        </div>
+        <div
+          *ngIf="profileForm.get('address')?.invalid && (profileForm.get('address')?.dirty || profileForm.get('address')?.touched)"
+          class="ml-52 text-sm text-red-600 mt-1">
+          <div *ngIf="profileForm.get('address')?.errors?.['required']">Địa chỉ là bắt buộc</div>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex justify-end gap-4 pt-6 mt-6 border-t border-gray-200">
+        <p-button label="Hủy" severity="secondary" (click)="toggleEdit()" size="large" />
+        <p-button label=" Lưu" (click)="saveProfile()" [disabled]="profileForm.invalid" severity="success"
+          size="large" />
+      </div>
+    </div>
+  </form>
+</div>
