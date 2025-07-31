@@ -21,32 +21,32 @@
       <div
         class="flex items-center py-4 border-b border-gray-100 hover:bg-gray-50 px-3 rounded-lg transition-colors duration-150">
         <label class="w-48 font-medium text-gray-600">Tên</label>
-        <div class="flex-1 text-gray-800 font-medium">{{userDetail?.name}}</div>
+        <div class="flex-1 text-gray-800 font-medium">{{userDetail.name}}</div>
       </div>
 
       <div
         class="flex items-center py-4 border-b border-gray-100 hover:bg-gray-50 px-3 rounded-lg transition-colors duration-150">
         <label class="w-48 font-medium text-gray-600">Email</label>
-        <div class="flex-1 text-gray-800 font-medium">{{userDetail?.email}}</div>
+        <div class="flex-1 text-gray-800 font-medium">{{userDetail.email}}</div>
       </div>
 
       <div
         class="flex items-center py-4 border-b border-gray-100 hover:bg-gray-50 px-3 rounded-lg transition-colors duration-150">
         <label class="w-48 font-medium text-gray-600">Vai trò</label>
         <div class="flex-1 text-gray-800 font-medium">
-          {{ getRoleName(userDetail?.role) }}
+          {{ getRoleName(userDetail.role) }}
         </div>
       </div>
 
       <div
         class="flex items-center py-4 border-b border-gray-100 hover:bg-gray-50 px-3 rounded-lg transition-colors duration-150">
         <label class="w-48 font-medium text-gray-600">Số điện thoại</label>
-        <div class="flex-1 text-gray-800 font-medium">{{userDetail?.phoneNumber}}</div>
+        <div class="flex-1 text-gray-800 font-medium">{{userDetail.phoneNumber}}</div>
       </div>
 
       <div class="flex items-center py-4 hover:bg-gray-50 px-3 rounded-lg transition-colors duration-150">
         <label class="w-48 font-medium text-gray-600">Địa chỉ</label>
-        <div class="flex-1 text-gray-800 font-medium">{{userDetail?.address}}</div>
+        <div class="flex-1 text-gray-800 font-medium">{{userDetail.address}}</div>
       </div>
     </div>
 
@@ -89,15 +89,10 @@
       <!-- Role Field -->
       <div class="flex flex-col gap-1">
         <div class="flex items-center gap-6">
-          <label for="role" class="font-semibold w-48 text-gray-700">Vai trò</label>
-          <p-dropdown [options]="roles" formControlName="role" optionLabel="name" optionValue="value"
-            placeholder="Chọn Vai Trò" class="flex-1 min-w-0"
-            [ngClass]="{'border-red-500': profileForm.get('role')?.invalid && (profileForm.get('role')?.dirty || profileForm.get('role')?.touched)}"></p-dropdown>
-        </div>
-        <div
-          *ngIf="profileForm.get('role')?.invalid && (profileForm.get('role')?.dirty || profileForm.get('role')?.touched)"
-          class="ml-52 text-sm text-red-600 mt-1">
-          <div *ngIf="profileForm.get('role')?.errors?.['required']">Vai trò là bắt buộc</div>
+          <label class="w-48 font-medium text-gray-600">Vai trò</label>
+          <div class="flex-1 text-gray-800 font-medium">
+            {{ getRoleName(userDetail.role) }}
+          </div>
         </div>
       </div>
 

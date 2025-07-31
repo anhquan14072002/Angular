@@ -1,17 +1,18 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { User } from '../../type/user.type';
+import { SelectModule } from 'primeng/select';
 import { ToastModule } from 'primeng/toast';
-import { Role } from '../../type/role.type';
-import { RoleValue } from '../../utils/role';
-import { DropdownModule } from 'primeng/dropdown';
-import { CommonModule } from '@angular/common';
+import { catchError, of, Subject, switchMap, take, takeUntil } from 'rxjs';
+import { ROLE_MANAGER } from '../../enum/role';
 import { UserApiService } from '../../services/api/userApi.service';
 import { ToastService } from '../../services/toast.service';
 import { UserService } from '../../services/user.service';
-import { catchError, of, Subject, switchMap, take, takeUntil } from 'rxjs';
+import { Role } from '../../type/role.type';
+import { User } from '../../type/user.type';
+import { RoleValue } from '../../utils/role';
 
 @Component({
   selector: 'app-profile',
@@ -22,7 +23,7 @@ import { catchError, of, Subject, switchMap, take, takeUntil } from 'rxjs';
     InputTextModule,
     ReactiveFormsModule,
     ToastModule,
-    DropdownModule
+    SelectModule
   ],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
@@ -84,7 +85,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
             email: user.email,
             role: user.role,
             phoneNumber: user.phoneNumber,
-            address: user.address
+            address: user.address,
           });
 
           return this.userApiService.getUserById(user.id).pipe(
@@ -108,7 +109,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
               email: updatedUser.email,
               role: updatedUser.role,
               phoneNumber: updatedUser.phoneNumber,
-              address: updatedUser.address
+              address: updatedUser.address,
             });
           }
 
@@ -146,7 +147,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     const userToUpdate = {
       ...this.profileForm.value,
       id: this.userDetail.id,
-      password: this.userDetail.password
+      password: this.userDetail.password,
+      isActive: true
     };
 
     this.isLoading = true;

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit, DoCheck, HostListener, ElementRef } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { User } from '../../type/user.type';
@@ -18,7 +18,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private readonly router: Router,
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly elementRef: ElementRef
   ) { }
 
   ngOnInit(): void {
@@ -33,4 +34,20 @@ export class HeaderComponent implements OnInit {
     this.previousUser = null;
     this.router.navigate(['/login']);
   }
+
+  //open toggle
+  isDropdownOpen: boolean = false;
+
+  toggleDropdown(): void {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  // Đóng dropdown khi click ra ngoài
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.isDropdownOpen = false;
+    }
+  }
+
 }

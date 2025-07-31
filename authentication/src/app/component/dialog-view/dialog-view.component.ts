@@ -28,9 +28,9 @@ import { CommonModule } from '@angular/common';
 })
 export class DialogViewComponent implements OnInit {
   @Input() visible: boolean = false;
-  private _userDetail!: User; 
-  
-  @Input() 
+  private _userDetail!: User;
+
+  @Input()
   set userDetail(user: User) {
     if (user) {
       this._userDetail = user;
@@ -44,7 +44,7 @@ export class DialogViewComponent implements OnInit {
       });
     }
   }
-  
+
   get userDetail(): User {
     return this._userDetail;
   }
@@ -59,12 +59,11 @@ export class DialogViewComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.userForm = this.fb.group({
-      id: [''],
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}')]],
       role: ['', Validators.required],
       phoneNumber: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],
-      address: ['', Validators.required]
+      address: ['', Validators.required],
     });
   }
 
@@ -86,10 +85,12 @@ export class DialogViewComponent implements OnInit {
     }
 
     const formValue = this.userForm.value;
+
     const userToUpdate = {
       ...formValue,
-      id: this.userForm.value.id || this.userDetail.id,
-      password: this.userDetail.password // Sử dụng password từ userDetail hiện tại
+      id: this.userDetail.id,
+      isActive: this.userDetail.isActive,
+      password: this.userDetail.password
     };
 
     if (!userToUpdate.id) {

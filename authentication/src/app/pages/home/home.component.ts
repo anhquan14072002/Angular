@@ -13,6 +13,7 @@ import { RoleValue } from '../../utils/role';
 import { DialogCreateComponent } from '../../component/dialog-create/dialog-create.component';
 import { StatusValue } from '../../utils/status';
 import { Status } from '../../type/status.type';
+import { ROLE_MANAGER } from '../../enum/role';
 
 @Component({
   selector: 'app-home',
@@ -24,11 +25,11 @@ export class HomeComponent implements OnInit {
   constructor(
     private readonly toast: ToastService,
     private readonly userApiService: UserApiService,
-    private readonly userService:UserService
+    private readonly userService: UserService
   ) { };
   users: User[] = [];
   userDetail!: User;
-  userExisting!:User;
+  userExisting!: User;
   status: Status[] | undefined;
 
   //Visibility dialog 
@@ -53,7 +54,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-     this.userService.getUser().subscribe(user => {
+    this.userService.getUser().subscribe(user => {
       this.userExisting = user;
     });
     this.status = StatusValue,
@@ -70,10 +71,8 @@ export class HomeComponent implements OnInit {
         this.toast.showError('Cập nhật không thành công');
       }
     });
-    console.log(event.value);
-    console.log(user);
-
   }
+
   pageChange(event: any) {
     this.first = event.first;
     this.rows = event.rows;
@@ -103,6 +102,10 @@ export class HomeComponent implements OnInit {
   getRoleName(roleValue: string): string {
     const role = RoleValue.find(r => r.value === roleValue);
     return role ? role.name : roleValue;
+  }
+
+  isAdminRole(roleValue: string): boolean {
+    return roleValue === ROLE_MANAGER.Admin
   }
   handleUserDetail(user: User) {
     this.visible = true;

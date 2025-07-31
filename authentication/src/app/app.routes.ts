@@ -17,7 +17,7 @@ export const routes: Routes = [
     { path: 'profile', component: ProfileComponent },
     {
         path: '',
-        component: LoginComponent,
+        component: ProfileComponent,
     },
     { path: '**', component: ErrorComponent },
 ];

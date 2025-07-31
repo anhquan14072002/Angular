@@ -27,9 +27,9 @@
                 <td>{{ user.email }}</td>
                 <td>{{ user.phoneNumber }}</td>
                 <td>
-                    <p-select [disabled]="userExisting.id === user.id" [options]="status" [(ngModel)]="user.isActive"
-                        (onChange)="onStatusChange($event, user)" optionValue="value" optionLabel="name"
-                        class="w-full md:w-40" />
+                    <p-select [disabled]="userExisting.id === user.id ||isAdminRole(user.role) " [options]="status"
+                        [(ngModel)]="user.isActive" (onChange)="onStatusChange($event, user)" optionValue="value"
+                        optionLabel="name" class="w-full md:w-40" />
                 </td>
                 <td>{{ getRoleName(user.role) }}</td>
                 <td>

@@ -22,18 +22,19 @@
     },
     {
       "id": 3,
-      "name": "Lê Hoàng Cường123123123",
+      "name": "Lê H",
       "email": "lehoangcuong@example.com",
-      "role": "Admin",
-      "phoneNumber": "0978123456",
+      "role": "Staff",
+      "phoneNumber": "0978123433",
       "address": "789 Hải Phòng, Đà Nẵng",
+      "password": "123123123",
       "isActive": true
     },
     {
       "id": 6,
       "name": "Đặng Thu Hà",
       "email": "dangthuha@example.com",
-      "role": "Admin",
+      "role": "User",
       "phoneNumber": "0945678123",
       "address": "753 Phạm Văn Đồng, Nha Trang",
       "isActive": true
