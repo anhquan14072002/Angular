@@ -14,7 +14,6 @@ import { UserService } from '../../services/user.service';
 export class HeaderComponent implements OnInit {
   userExisting: Partial<User> | null = null;
   adminExisting: Partial<User> | null = null;
-  previousUser: string | null = null;
 
   constructor(
     private readonly router: Router,
@@ -31,7 +30,6 @@ export class HeaderComponent implements OnInit {
   handleLogout(): void {
     this.userService.removeUser()
     this.userExisting = null;
-    this.previousUser = null;
     this.router.navigate(['/login']);
   }
 
